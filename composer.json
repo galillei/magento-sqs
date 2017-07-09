@@ -1,0 +1,24 @@
+{
+  "name": "belvg/module-sqs",
+  "description": "N/A",
+  "require": {
+    "php": "7.0.2|7.0.4|~7.0.6",
+    "magento/framework": "100.1.*",
+    "magento/framework-message-queue": "100.1.*",
+    "enqueue/sqs":"^0.4.9"
+  },
+  "type": "magento2-module",
+  "version": "0.0.1",
+  "license": [
+    "OSL-3.0",
+    "AFL-3.0"
+  ],
+  "autoload": {
+    "files": [
+      "registration.php"
+    ],
+    "psr-4": {
+      "Belvg\\Sqs\\": ""
+    }
+  }
+}

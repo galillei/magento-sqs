@@ -1,0 +1,1 @@
+This module for magento2.1ee. This module help use amazon sqs queue. Use it like other queues in magento2ee.  
