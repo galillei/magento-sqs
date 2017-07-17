@@ -169,7 +169,7 @@ class Queue implements QueueInterface
                 } else {
                     call_user_func($callback, $envelope);
                 }
-                $this->createConsumer()->acknowledge($message);
+                //$this->createConsumer()->acknowledge($message);
                 if (null !== $qtyOfMessages && $index >= $qtyOfMessages) {
                     break;
                 }
