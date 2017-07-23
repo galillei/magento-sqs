@@ -71,13 +71,9 @@ class Topology
         foreach ($this->queueConfig->getBinds() as $bind) {
             $queueName = $bind[QueueConfig::BIND_QUEUE];
             $exchangeName = $bind[QueueConfig::BIND_EXCHANGE];
-            $topicName = $bind[QueueConfig::BIND_TOPIC];
             if (in_array($queueName, $availableQueues) && in_array($exchangeName, $availableExchanges)) {
                 try {
                     $this->declareQueue($queueName);
-//                    $this->declareCallbackQueue($topicName);
-//                    $this->declareExchange($exchangeName);
-//                    $this->bindQueue($queueName, $exchangeName, $topicName);
                 } catch (\Exception $e) {
                     $this->logger->error(
                         sprintf(
@@ -159,64 +155,5 @@ class Topology
     protected function getQueueName($queueName)
     {
         return Data::prepareQueueName($queueName);
-    }
-
-    /**
-     * Declare SQS Queue for Callback
-     *
-     * @param string $topicName
-     * @return void
-     */
-    private function declareCallbackQueue($topicName)
-    {
-        // i don't know how use it
-//        if ($this->isSynchronousModeTopic($topicName)) {
-//            $callbackQueueName = $this->queueConfig->getResponseQueueName($topicName);
-//            $this->declareQueue($callbackQueueName);
-//        }
-    }
-
-    /**
-     * Check whether the topic is in synchronous mode
-     *
-     * @param string $topicName
-     * @return bool
-     * @throws LocalizedException
-     */
-    private function isSynchronousModeTopic($topicName)
-    {
-//        try {
-//            $topic = $this->communicationConfig->getTopic($topicName);
-//            $isSync = (bool)$topic[CommunicationConfig::TOPIC_IS_SYNCHRONOUS];
-//        } catch (LocalizedException $e) {
-//            throw new LocalizedException(__('Error while checking if topic is synchronous'));
-//        }
-//        return $isSync;
-    }
-
-    /**
-     * Declare SQS Exchange
-     *
-     * @param string $exchangeName
-     * @return void
-     */
-    private function declareExchange($exchangeName)
-    {
-        $this->getConnection()->createQueueAsync([
-            'QueueName' => $exchangeName,
-        ]);
-    }
-
-    /**
-     * Bind queue and exchange
-     *
-     * @param string $queueName
-     * @param string $exchangeName
-     * @param string $topicName
-     * @return void
-     */
-    private function bindQueue($queueName, $exchangeName, $topicName)
-    {
-        $this->getConnection()->queue_bind($queueName, $exchangeName, $topicName);
     }
 }
