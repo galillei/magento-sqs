@@ -1,4 +1,9 @@
 <?php
+/**
+ *  @package BelVG AWS Sqs.
+ *  @copyright 2018
+ *
+ */
 
 namespace Belvg\Sqs\Model;
 

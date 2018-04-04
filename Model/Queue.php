@@ -1,5 +1,9 @@
 <?php
-
+/**
+ *  @package BelVG AWS Sqs.
+ *  @copyright 2018
+ *
+ */
 namespace Belvg\Sqs\Model;
 
 use Belvg\Sqs\Helper\Data;
@@ -15,6 +19,7 @@ use Psr\Log\LoggerInterface;
 class Queue implements QueueInterface
 {
     const TIMEOUT_PROCESS = 20000;
+
     /**
      * @var Config
      */
@@ -110,6 +115,10 @@ class Queue implements QueueInterface
         return Data::prepareQueueName($this->queueName);
     }
 
+    /**
+     * @param PsrMessage $message
+     * @return \Magento\Framework\MessageQueue\Envelope
+     */
     protected function createEnvelop(PsrMessage $message)
     {
         return $this->envelopeFactory->create([
@@ -134,7 +143,7 @@ class Queue implements QueueInterface
     }
 
     /**
-     * @param EnvelopeInterface $envelopereceiptHandle
+     * @param EnvelopeInterface $envelope
      * @return \Enqueue\Sqs\SqsMessage
      */
     protected function createMessage(EnvelopeInterface $envelope)

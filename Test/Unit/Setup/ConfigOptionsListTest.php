@@ -1,5 +1,9 @@
 <?php
-
+/**
+ *  @package BelVG AWS Sqs.
+ *  @copyright 2018
+ *
+ */
 namespace Belvg\Sqs\Test\Unit\Setup;
 
 use Magento\Framework\TestFramework\Unit\Helper\ObjectManager;

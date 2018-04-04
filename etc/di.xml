@@ -46,4 +46,13 @@
             </argument>
         </arguments>
     </type>
+    <type name="Magento\Framework\Console\CommandList">
+        <arguments>
+            <argument name="commands" xsi:type="array">
+                <item name="belvgSqsQueueCreate" xsi:type="object">Belvg\Sqs\Console\Command\QueueCreate</item>
+                <item name="belvgSqsQueueDelete" xsi:type="object">Belvg\Sqs\Console\Command\QueueDelete</item>
+                <item name="belvgSqsQueuePurge" xsi:type="object">Belvg\Sqs\Console\Command\QueuePurge</item>
+            </argument>
+        </arguments>
+    </type>
 </config>
