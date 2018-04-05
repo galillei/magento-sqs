@@ -4,38 +4,14 @@
  *  @copyright 2018
  *
  */
+
 namespace Belvg\Sqs\Console\Command;
 
-use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
-use Belvg\Sqs\Model\Topology;
 
-class QueuePurge extends Command
+class QueuePurge extends QueueMain
 {
-    /**
-     * @var Topology
-     */
-    private $topologySQS;
-
-    /**
-     * @var OutputInterface
-     */
-    protected $output;
-
-    /**
-     * Constructor.
-     */
-    public function __construct(
-        Topology $topology
-    )
-    {
-        $this->topologySQS = $topology;
-
-        parent::__construct();
-    }
-
     protected function configure()
     {
         $this->setName('queue:belvg:sqs:purge');
@@ -55,7 +31,7 @@ class QueuePurge extends Command
 
         $start = microtime(true);
 
-        $this->topologySQS->install();
+        $this->topologySQS->purge();
 
         $this->output->writeln('Queues have created. Finish (' . (microtime(true) - $start)/60 . ' min).');
     }

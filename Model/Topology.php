@@ -4,11 +4,11 @@
  *  @copyright 2018
  *
  */
+
 namespace Belvg\Sqs\Model;
 
 use Belvg\Sqs\Helper\Data;
 use Magento\Framework\Communication\ConfigInterface as CommunicationConfig;
-use Magento\Framework\Exception\LocalizedException;
 use Magento\Framework\MessageQueue\ConfigInterface as QueueConfig;
 
 /**
@@ -38,7 +38,6 @@ class Topology
     private $sqsConfig;
 
     /**
-
      * @var QueueConfig
      */
     private $queueConfig;
@@ -86,13 +85,41 @@ class Topology
                 } catch (\Exception $e) {
                     $this->logger->error(
                         sprintf(
-                            'There is a problem with creating or binding queue "%s" and an exchange "%s". Error:%s',
+                            'There is a problem with creating or binding queue "%s" and an exchange "%s". Error: %s',
                             $queueName,
                             $exchangeName,
                             $e->getTraceAsString()
                         )
                     );
                 }
+            }
+        }
+    }
+
+    /**
+     * Create SQS Queues
+     *
+     * @return void
+     */
+    public function create($queueName = '')
+    {
+        if ($queueName) {
+            $availableQueues[] = $queueName;
+        } else {
+            $availableQueues = $this->getQueuesList(self::SQS_CONNECTION);
+        }
+
+        foreach ($availableQueues as $queue) {
+            try {
+                $this->declareQueue($queue);
+            } catch (\Exception $e) {
+                $this->logger->error(
+                    sprintf(
+                        'There is a problem with creating queue "%s". Error: %s',
+                        $queue,
+                        $e->getMessage()
+                    )
+                );
             }
         }
     }
@@ -102,28 +129,27 @@ class Topology
      *
      * @return void
      */
-    public function delete()
+    public function delete($queueName = '')
     {
-        $availableQueues = $this->getQueuesList(self::SQS_CONNECTION);
-        $availableExchanges = $this->getExchangesList(self::SQS_CONNECTION);
-        foreach ($this->queueConfig->getBinds() as $bind) {
-            $queueName = $bind[QueueConfig::BIND_QUEUE];
-            $exchangeName = $bind[QueueConfig::BIND_EXCHANGE];
-            if (in_array($queueName, $availableQueues) && in_array($exchangeName, $availableExchanges)) {
+        if ($queueName) {
+            $availableQueues[] = $queueName;
+        } else {
+            $availableQueues = $this->getQueuesList(self::SQS_CONNECTION);
+        }
+
+        foreach ($availableQueues as $queue) {
                 try {
-                    $this->deleteQueue($queueName);
+                    $this->deleteQueue($queue);
                 } catch (\Exception $e) {
                     $this->logger->error(
                         sprintf(
-                            'There is a problem with creating or binding queue "%s" and an exchange "%s". Error:%s',
-                            $queueName,
-                            $exchangeName,
-                            $e->getTraceAsString()
+                            'There is a problem with removing queue "%s". Error: %s',
+                            $queue,
+                            $e->getMessage()
                         )
                     );
                 }
             }
-        }
     }
 
     /**
@@ -131,28 +157,27 @@ class Topology
      *
      * @return void
      */
-    public function purge()
+    public function purge($queueName = '')
     {
-        $availableQueues = $this->getQueuesList(self::SQS_CONNECTION);
-        $availableExchanges = $this->getExchangesList(self::SQS_CONNECTION);
-        foreach ($this->queueConfig->getBinds() as $bind) {
-            $queueName = $bind[QueueConfig::BIND_QUEUE];
-            $exchangeName = $bind[QueueConfig::BIND_EXCHANGE];
-            if (in_array($queueName, $availableQueues) && in_array($exchangeName, $availableExchanges)) {
+        if ($queueName) {
+            $availableQueues[] = $queueName;
+        } else {
+            $availableQueues = $this->getQueuesList(self::SQS_CONNECTION);
+        }
+
+        foreach ($availableQueues as $queue) {
                 try {
-                    $this->purgeQueue($queueName);
+                    $this->purgeQueue($queue);
                 } catch (\Exception $e) {
                     $this->logger->error(
                         sprintf(
-                            'There is a problem with creating or binding queue "%s" and an exchange "%s". Error:%s',
-                            $queueName,
-                            $exchangeName,
+                            'There is a problem with purging queue "%s". Error: %s',
+                            $queue,
                             $e->getMessage()
                         )
                     );
                 }
             }
-        }
     }
 
     /**
@@ -160,7 +185,7 @@ class Topology
      *
      * @param string $connection
      * @return array List of queue names
-     * @throws LocalizedException
+     * @throws \Magento\Framework\Exception\LocalizedException
      */
     private function getQueuesList($connection)
     {
@@ -233,6 +258,7 @@ class Topology
         $sqsQueueName = $this->getConnection()->createQueue($this->getQueueName($queueName));
         $this->getConnection()->purge($sqsQueueName);
     }
+
 
     /**
      * Return SQS connection
