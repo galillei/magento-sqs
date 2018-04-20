@@ -1,14 +1,12 @@
 <?php
-/**
- *  @package BelVG AWS Sqs.
- *  @copyright 2018
- *
- */
-
 namespace Belvg\Sqs\Console\Command;
 
+use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
+use Belvg\Sqs\Model\Topology;
+use Belvg\Sqs\Console\Command\QueueMain;
 
 class QueueDelete extends QueueMain
 {
@@ -31,7 +29,9 @@ class QueueDelete extends QueueMain
 
         $start = microtime(true);
 
-        $this->topologySQS->delete();
+        $queueName = (string) $input->getOption(self::QUEUE_NAME);
+
+        $this->topologySQS->delete($queueName);
 
         $this->output->writeln('Queues have deleted. Finish (' . (microtime(true) - $start)/60 . ' min).');
     }
