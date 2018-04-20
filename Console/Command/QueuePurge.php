@@ -31,7 +31,9 @@ class QueuePurge extends QueueMain
 
         $start = microtime(true);
 
-        $this->topologySQS->purge();
+        $queueName = (string) $input->getOption(self::QUEUE_NAME);
+
+        $this->topologySQS->purge($queueName);
 
         $this->output->writeln('Queues have created. Finish (' . (microtime(true) - $start)/60 . ' min).');
     }

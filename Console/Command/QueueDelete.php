@@ -31,7 +31,9 @@ class QueueDelete extends QueueMain
 
         $start = microtime(true);
 
-        $this->topologySQS->delete();
+        $queueName = (string) $input->getOption(self::QUEUE_NAME);
+
+        $this->topologySQS->delete($queueName);
 
         $this->output->writeln('Queues have deleted. Finish (' . (microtime(true) - $start)/60 . ' min).');
     }
