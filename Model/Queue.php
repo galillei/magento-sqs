@@ -4,6 +4,7 @@
  *  @copyright 2018
  *
  */
+
 namespace Belvg\Sqs\Model;
 
 use Belvg\Sqs\Helper\Data;
@@ -112,13 +113,9 @@ class Queue implements QueueInterface
      */
     protected function getQueueName()
     {
-        return Data::prepareQueueName($this->queueName);
+        return $this->sqsConfig->getValue(Config::PREFIX) . '_' . Data::prepareQueueName($this->queueName);
     }
 
-    /**
-     * @param PsrMessage $message
-     * @return \Magento\Framework\MessageQueue\Envelope
-     */
     protected function createEnvelop(PsrMessage $message)
     {
         return $this->envelopeFactory->create([
@@ -143,7 +140,7 @@ class Queue implements QueueInterface
     }
 
     /**
-     * @param EnvelopeInterface $envelope
+     * @param EnvelopeInterface $envelopereceiptHandle
      * @return \Enqueue\Sqs\SqsMessage
      */
     protected function createMessage(EnvelopeInterface $envelope)
