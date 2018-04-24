@@ -9,6 +9,7 @@ namespace Belvg\Sqs\Model;
 
 use Belvg\Sqs\Helper\Data;
 use Magento\Framework\Communication\ConfigInterface as CommunicationConfig;
+use Magento\Framework\Exception\LocalizedException;
 use Magento\Framework\MessageQueue\ConfigInterface as QueueConfig;
 
 /**
@@ -185,7 +186,6 @@ class Topology
      *
      * @param string $connection
      * @return array List of queue names
-     * @throws \Magento\Framework\Exception\LocalizedException
      */
     private function getQueuesList($connection)
     {
@@ -276,6 +276,6 @@ class Topology
      */
     protected function getQueueName($queueName)
     {
-        return Data::prepareQueueName($queueName);
+        return $this->sqsConfig->getValue(Config::PREFIX) . '_' . Data::prepareQueueName($queueName);
     }
 }

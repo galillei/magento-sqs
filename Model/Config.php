@@ -4,6 +4,7 @@
  *  @copyright 2018
  *
  */
+
 namespace Belvg\Sqs\Model;
 
 use Enqueue\Sqs\SqsConnectionFactory;
@@ -29,6 +30,7 @@ class Config
     const VERSION = 'version';
     const ACCESS_KEY = 'access_key';
     const SECRET_KEY = 'secret_key';
+    const PREFIX = 'prefix';
 
     /**
      * Deployment configuration
@@ -66,6 +68,7 @@ class Config
      *             'version' => 'latest',
      *             'access_key' => '123456',
      *             'secret_key' => '123456',
+     *             'prefix' => 'magento',
      *         ],
      *     ],
      * </code>
