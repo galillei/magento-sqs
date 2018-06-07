@@ -3,7 +3,7 @@
   "description": "N/A",
   "require": {
     "php": "~7.1.3||~7.2.0",
-    "magento/framework": "^101.0.0",
+    "magento/framework": "^102.0.0",
     "magento/framework-message-queue": "^100.3.0",
     "enqueue/sqs":"^0.4.9"
   },
