@@ -3,15 +3,15 @@
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
     <type name="Magento\Framework\MessageQueue\QueueRepository">
         <arguments>
-            <argument name="queues" xsi:type="array">
+            <argument name="queueFactories" xsi:type="array">
                 <item name="sqs" xsi:type="string">Belvg\Sqs\Model\Queue</item>
             </argument>
         </arguments>
     </type>
-    <type name="Magento\Framework\MessageQueue\ExchangeRepository">
+    <type name="Magento\Framework\MessageQueue\ExchangeFactory">
         <arguments>
-            <argument name="exchanges" xsi:type="array">
-                <item name="sqs" xsi:type="string">Belvg\Sqs\Model\Exchange</item>
+            <argument name="exchangeFactories" xsi:type="array">
+                <item name="sqs" xsi:type="object">Belvg\Sqs\Model\ExchangeFactory</item>
             </argument>
         </arguments>
     </type>
