@@ -32,16 +32,10 @@
         <arguments>
             <argument name="publishers" xsi:type="array">
                 <item name="async" xsi:type="array">
-                    <item name="sqs" xsi:type="array">
-                        <item name="type" xsi:type="object">Magento\Framework\MessageQueue\Publisher</item>
-                        <item name="connectionName" xsi:type="string">sqs</item>
-                    </item>
+                    <item name="sqs" xsi:type="object">Magento\Framework\MessageQueue\Publisher</item>
                 </item>
                 <item name="sync" xsi:type="array">
-                    <item name="sqs" xsi:type="array">
-                        <item name="type" xsi:type="object">Magento\Framework\MessageQueue\Rpc\Publisher</item>
-                        <item name="connectionName" xsi:type="string">sqs</item>
-                    </item>
+                    <item name="sqs" xsi:type="object">Magento\Framework\MessageQueue\Rpc\Publisher</item>
                 </item>
             </argument>
         </arguments>
