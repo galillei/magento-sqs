@@ -49,4 +49,11 @@
             </argument>
         </arguments>
     </type>
+    <type name="Magento\Framework\MessageQueue\ConnectionTypeResolver">
+        <arguments>
+            <argument name="resolvers" xsi:type="array">
+                <item name="sqs" xsi:type="object">Belvg\Sqs\Model\ConnectionTypeResolver</item>
+            </argument>
+        </arguments>
+    </type>
 </config>
