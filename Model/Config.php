@@ -31,7 +31,6 @@ class Config
     const ACCESS_KEY = 'access_key';
     const SECRET_KEY = 'secret_key';
     const PREFIX = 'prefix';
-    const ENDPOINT = 'endpoint';
 
     /**
      * Deployment configuration
@@ -70,7 +69,6 @@ class Config
      *             'access_key' => '123456',
      *             'secret_key' => '123456',
      *             'prefix' => 'magento',
-     *             'endpoint' => 'http://localhost:4575'
      *         ],
      *     ],
      * </code>
@@ -93,8 +91,7 @@ class Config
                 [
                     'region' => $this->getValue(Config::REGION),
                     'key' => $this->getValue(Config::ACCESS_KEY),
-                    'secret' => $this->getValue(Config::SECRET_KEY),
-                    'endpoint' => $this->getValue(Config::ENDPOINT)
+                    'secret' => $this->getValue(Config::SECRET_KEY)
                 ]
             ))->createContext();
         }

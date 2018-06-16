@@ -3,15 +3,15 @@
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
     <type name="Magento\Framework\MessageQueue\QueueRepository">
         <arguments>
-            <argument name="queueFactories" xsi:type="array">
+            <argument name="queues" xsi:type="array">
                 <item name="sqs" xsi:type="string">Belvg\Sqs\Model\Queue</item>
             </argument>
         </arguments>
     </type>
-    <type name="Magento\Framework\MessageQueue\ExchangeFactory">
+    <type name="Magento\Framework\MessageQueue\ExchangeRepository">
         <arguments>
-            <argument name="exchangeFactories" xsi:type="array">
-                <item name="sqs" xsi:type="object">Belvg\Sqs\Model\ExchangeFactory</item>
+            <argument name="exchanges" xsi:type="array">
+                <item name="sqs" xsi:type="string">Belvg\Sqs\Model\Exchange</item>
             </argument>
         </arguments>
     </type>
@@ -32,10 +32,16 @@
         <arguments>
             <argument name="publishers" xsi:type="array">
                 <item name="async" xsi:type="array">
-                    <item name="sqs" xsi:type="object">Magento\Framework\MessageQueue\Publisher</item>
+                    <item name="sqs" xsi:type="array">
+                        <item name="type" xsi:type="object">Magento\Framework\MessageQueue\Publisher</item>
+                        <item name="connectionName" xsi:type="string">sqs</item>
+                    </item>
                 </item>
                 <item name="sync" xsi:type="array">
-                    <item name="sqs" xsi:type="object">Magento\Framework\MessageQueue\Rpc\Publisher</item>
+                    <item name="sqs" xsi:type="array">
+                        <item name="type" xsi:type="object">Magento\Framework\MessageQueue\Rpc\Publisher</item>
+                        <item name="connectionName" xsi:type="string">sqs</item>
+                    </item>
                 </item>
             </argument>
         </arguments>
@@ -46,13 +52,6 @@
                 <item name="belvgSqsQueueCreate" xsi:type="object">Belvg\Sqs\Console\Command\QueueCreate</item>
                 <item name="belvgSqsQueueDelete" xsi:type="object">Belvg\Sqs\Console\Command\QueueDelete</item>
                 <item name="belvgSqsQueuePurge" xsi:type="object">Belvg\Sqs\Console\Command\QueuePurge</item>
-            </argument>
-        </arguments>
-    </type>
-    <type name="Magento\Framework\MessageQueue\ConnectionTypeResolver">
-        <arguments>
-            <argument name="resolvers" xsi:type="array">
-                <item name="sqs" xsi:type="object">Belvg\Sqs\Model\ConnectionTypeResolver</item>
             </argument>
         </arguments>
     </type>
