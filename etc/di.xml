@@ -4,7 +4,7 @@
     <type name="Magento\Framework\MessageQueue\QueueFactory">
         <arguments>
             <argument name="queueFactories" xsi:type="array">
-                <item name="sqs" xsi:type="object">Belvg\Sqs\Model\Queue</item>
+                <item name="sqs" xsi:type="object">Belvg\Sqs\Model\QueueFactory</item>
             </argument>
         </arguments>
     </type>
