@@ -8,7 +8,7 @@
 namespace Belvg\Sqs\Model;
 
 use Belvg\Sqs\Helper\Data;
-use Enqueue\Psr\PsrMessage;
+use Interop\Queue\PsrMessage;
 use Magento\Framework\MessageQueue\EnvelopeFactory;
 use Magento\Framework\MessageQueue\EnvelopeInterface;
 use Magento\Framework\MessageQueue\QueueInterface;
