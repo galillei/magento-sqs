@@ -49,7 +49,7 @@ class QueueFactory implements \Magento\Framework\MessageQueue\QueueFactoryInterf
      * {@inheritdoc}
      * @since 100.0.0
      */
-    public function create($queueName, $connectionName)
+    public function create($queueName, $connectionName = '')
     {
         return $this->objectManager->create(
             $this->instanceName,
