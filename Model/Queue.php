@@ -82,7 +82,7 @@ class Queue implements QueueInterface
          */
         $message = $this->createConsumer()->receive(self::TIMEOUT_PROCESS);
         if (null !== $message) {
-            $envelope = $this->createEnvelop($message);;
+            $envelope = $this->createEnvelop($message);
             return $envelope;
         }
         return null;
