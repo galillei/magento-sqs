@@ -7,28 +7,11 @@
 namespace Belvg\Sqs\Test\Unit\Model;
 
 use Belvg\Sqs\Model\Config;
-use Belvg\Sqs\Model\SqsConnectionFactory;
 use Belvg\Sqs\Model\Topology;
-use Magento\Framework\App\DeploymentConfig;
 use Magento\Framework\TestFramework\Unit\Helper\ObjectManager;
 
 class TopologyTest extends \PHPUnit\Framework\TestCase
 {
-    /**
-     * @var DeploymentConfig
-     */
-    private $deploymentConfigMock;
-
-    /**
-     * @var SqsConnectionFactory
-     */
-    private $sqsConnectionFactory;
-
-    /**
-     * @var \Enqueue\Sqs\SqsConnectionFactory
-     */
-    private $enqueueSqsConnectionFactory;
-
     /**
      * @var Topology
      */
