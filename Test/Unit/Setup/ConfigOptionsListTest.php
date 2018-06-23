@@ -10,7 +10,7 @@ use Magento\Framework\TestFramework\Unit\Helper\ObjectManager;
 use Belvg\Sqs\Setup\ConfigOptionsList;
 use Magento\Framework\Setup\Option\TextConfigOption;
 
-class ConfigOptionsListTest extends \PHPUnit_Framework_TestCase
+class ConfigOptionsListTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * @var ObjectManager

@@ -10,7 +10,7 @@ use Belvg\Sqs\Model\Config;
 use Magento\Framework\App\DeploymentConfig;
 use Magento\Framework\TestFramework\Unit\Helper\ObjectManager;
 
-class ConfigTest extends \PHPUnit_Framework_TestCase
+class ConfigTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * @var DeploymentConfig
@@ -37,7 +37,7 @@ class ConfigTest extends \PHPUnit_Framework_TestCase
         $this->sqsConfig = $this->objectManager->getObject(
             'Belvg\Sqs\Model\Config',
             [
-                'config' => $this->deploymentConfigMock,
+                'config' => $this->deploymentConfigMock
             ]
         );
     }
@@ -53,6 +53,8 @@ class ConfigTest extends \PHPUnit_Framework_TestCase
         $this->assertNull($this->sqsConfig->getValue(Config::VERSION));
         $this->assertNull($this->sqsConfig->getValue(Config::ACCESS_KEY));
         $this->assertNull($this->sqsConfig->getValue(Config::SECRET_KEY));
+        $this->assertNull($this->sqsConfig->getValue(Config::PREFIX));
+        $this->assertNull($this->sqsConfig->getValue(Config::ENDPOINT));
     }
 
     public function testGetEmptyConfig()
@@ -66,6 +68,8 @@ class ConfigTest extends \PHPUnit_Framework_TestCase
         $this->assertNull($this->sqsConfig->getValue(Config::VERSION));
         $this->assertNull($this->sqsConfig->getValue(Config::ACCESS_KEY));
         $this->assertNull($this->sqsConfig->getValue(Config::SECRET_KEY));
+        $this->assertNull($this->sqsConfig->getValue(Config::PREFIX));
+        $this->assertNull($this->sqsConfig->getValue(Config::ENDPOINT));
     }
 
     public function testGetStandardConfig()
@@ -74,6 +78,8 @@ class ConfigTest extends \PHPUnit_Framework_TestCase
         $expectedVersion = 'latest';
         $expectedAccessKey = '123456';
         $expectedSecretKey = '123456';
+        $expectedPrefix = 'prefix';
+        $expectedEndpoint = 'https://localstack:4567';
 
         $this->deploymentConfigMock->expects($this->once())
             ->method('getConfigData')
@@ -85,6 +91,8 @@ class ConfigTest extends \PHPUnit_Framework_TestCase
                         'version' => $expectedVersion,
                         'access_key' => $expectedAccessKey,
                         'secret_key' => $expectedSecretKey,
+                        'prefix' => $expectedPrefix,
+                        'endpoint' => $expectedEndpoint
                     ]
                 ]
             ));
@@ -93,5 +101,8 @@ class ConfigTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($expectedVersion, $this->sqsConfig->getValue(Config::VERSION));
         $this->assertEquals($expectedAccessKey, $this->sqsConfig->getValue(Config::ACCESS_KEY));
         $this->assertEquals($expectedSecretKey, $this->sqsConfig->getValue(Config::SECRET_KEY));
+        $this->assertEquals($expectedPrefix, $this->sqsConfig->getValue(Config::PREFIX));
+        $this->assertEquals($expectedEndpoint, $this->sqsConfig->getValue(Config::ENDPOINT));
+
     }
 }

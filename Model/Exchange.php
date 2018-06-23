@@ -59,7 +59,7 @@ class Exchange implements ExchangeInterface
         if (array_key_exists($topicName, $this->queues)) {
             return $this->queues[$topicName];
         }
-        $this->queues[$topicName] = $this->queueFactory->create(['queueName' => $topicName]);
+        $this->queues[$topicName] = $this->queueFactory->create($topicName);
         return $this->queues[$topicName];
     }
 

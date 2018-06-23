@@ -1,10 +1,10 @@
 <?xml version="1.0"?>
 
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
-    <type name="Magento\Framework\MessageQueue\QueueRepository">
+    <type name="Magento\Framework\MessageQueue\QueueFactory">
         <arguments>
             <argument name="queueFactories" xsi:type="array">
-                <item name="sqs" xsi:type="string">Belvg\Sqs\Model\Queue</item>
+                <item name="sqs" xsi:type="object">Belvg\Sqs\Model\QueueFactory</item>
             </argument>
         </arguments>
     </type>
