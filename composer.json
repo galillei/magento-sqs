@@ -7,6 +7,9 @@
     "magento/framework-message-queue": "^100.3.0",
     "enqueue/sqs":"@dev"
   },
+  "require-dev": {
+    "satooshi/php-coveralls": "^1.0"
+  },
   "type": "magento2-module",
   "version": "0.23.2",
   "license": [
