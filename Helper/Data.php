@@ -6,16 +6,42 @@
  */
 namespace Belvg\Sqs\Helper;
 
+use Belvg\Sqs\Model\Config;
+
 class Data
 {
+    /**
+     * @var Config
+     */
+    private $sqsConfig;
+
+    /**
+     * Data constructor.
+     * @param Config $sqsConfig
+     */
+    public function __construct(
+        Config $sqsConfig
+    ) {
+        $this->sqsConfig = $sqsConfig;
+    }
+
     /**
      * Prepare queue name
      *
      * @param string $queueName
-     * @return mixed
+     * @param bool $addPrefix
+     * @return string
      */
-    public static function prepareQueueName(string $queueName)
+    public function prepareQueueName(string $queueName, $addPrefix = false)
     {
-        return str_replace('.', '_', $queueName);
+        $queueName = str_replace('.', '_', $queueName);
+        if ($addPrefix) {
+            $prefix = $this->sqsConfig->getValue(Config::PREFIX);
+            if ($prefix) {
+                $queueName = $prefix . '_' . $queueName;
+            }
+        }
+
+        return $queueName;
     }
 }

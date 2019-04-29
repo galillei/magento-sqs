@@ -8,7 +8,8 @@
 namespace Belvg\Sqs\Model;
 
 use Belvg\Sqs\Helper\Data;
-use Interop\Queue\PsrMessage;
+use Enqueue\Psr\PsrMessage;
+use Magento\Framework\App\ObjectManager;
 use Magento\Framework\MessageQueue\EnvelopeFactory;
 use Magento\Framework\MessageQueue\EnvelopeInterface;
 use Magento\Framework\MessageQueue\QueueInterface;
@@ -52,24 +53,32 @@ class Queue implements QueueInterface
     private $consumer;
 
     /**
+     * @var Data
+     */
+    private $helper;
+
+    /**
      * Initialize dependencies.
      *
      * @param Config $amqpConfig
      * @param EnvelopeFactory $envelopeFactory
      * @param string $queueName
      * @param LoggerInterface $logger
+     * @param Data $helper
      */
     public function __construct(
         Config $sqsConfig,
         EnvelopeFactory $envelopeFactory,
         $queueName,
-        LoggerInterface $logger
+        LoggerInterface $logger,
+        Data $helper = null
     )
     {
         $this->sqsConfig = $sqsConfig;
         $this->queueName = $queueName;
         $this->envelopeFactory = $envelopeFactory;
         $this->logger = $logger;
+        $this->helper = $helper ?: ObjectManager::getInstance()->get(Data::class);
     }
 
     /**
@@ -111,11 +120,15 @@ class Queue implements QueueInterface
     /**
      * @return string
      */
-    protected function getQueueName()
+    public function getQueueName()
     {
-        return $this->sqsConfig->getValue(Config::PREFIX) . '_' . Data::prepareQueueName($this->queueName);
+        return $this->helper->prepareQueueName($this->queueName, true);
     }
 
+    /**
+     * @param PsrMessage $message
+     * @return \Magento\Framework\MessageQueue\Envelope
+     */
     protected function createEnvelop(PsrMessage $message)
     {
         return $this->envelopeFactory->create([
@@ -140,10 +153,13 @@ class Queue implements QueueInterface
     }
 
     /**
+     * It's possible to use after* plugin to set `message_group_id` if your queue type is FIFO:
+     * $message->setMessageGroupId($groupId)
+     *
      * @param EnvelopeInterface $envelopereceiptHandle
      * @return \Enqueue\Sqs\SqsMessage
      */
-    protected function createMessage(EnvelopeInterface $envelope)
+    public function createMessage(EnvelopeInterface $envelope)
     {
         $mergerProperties = $envelope->getProperties();
         $properties = array_key_exists('properties', $mergerProperties) ? $mergerProperties['properties'] : [];
