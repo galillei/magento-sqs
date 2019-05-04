@@ -50,10 +50,12 @@ class QueueTest extends \PHPUnit\Framework\TestCase
 
         $this->context = $this->getMockBuilder(\Enqueue\Sqs\SqsContext::class)
             ->disableOriginalConstructor()
+            ->setMethods(['createQueue','createMessage','createConsumer'])
             ->getMock();
 
         $this->consumer = $this->getMockBuilder(\Enqueue\Sqs\SqsConsumer::class)
             ->disableOriginalConstructor()
+            ->setMethods(['acknowledge','receive'])
             ->getMock();
 
         $this->destination = $this->getMockBuilder(\Enqueue\Sqs\SqsDestination::class)

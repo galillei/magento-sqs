@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<phpunit backupGlobals="false"
+         backupStaticAttributes="false"
+         bootstrap="vendor/autoload.php"
+         colors="true"
+         convertErrorsToExceptions="true"
+         convertNoticesToExceptions="true"
+         convertWarningsToExceptions="true"
+         processIsolation="false"
+         stopOnFailure="false">
+    <testsuite name="Unit Tests">
+        <directory suffix="Test.php">Test/Unit</directory>
+    </testsuite>
+    <filter>
+        <whitelist>
+            <directory suffix=".php">./Helper</directory>
+            <directory suffix=".php">./Model</directory>
+            <directory suffix=".php">./Setup</directory>
+            <directory suffix=".php">./Console</directory>
+        </whitelist>
+    </filter>
+    <logging>
+        <log type="coverage-clover" target="build/logs/clover.xml"/>
+    </logging>
+</phpunit>

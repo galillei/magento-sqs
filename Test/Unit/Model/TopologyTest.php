@@ -40,6 +40,7 @@ class TopologyTest extends \PHPUnit\Framework\TestCase
 
         $this->context = $this->getMockBuilder(\Enqueue\Sqs\SqsContext::class)
             ->disableOriginalConstructor()
+            ->setMethods(['createQueue','declareQueue','deleteQueue','purge'])
             ->getMock();
 
         $this->destination = $this->getMockBuilder(\Enqueue\Sqs\SqsDestination::class)
