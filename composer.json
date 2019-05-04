@@ -14,11 +14,8 @@
   },
   "require-dev": {
     "phpunit/phpunit": "4.1.0",
-    "squizlabs/php_codesniffer": "1.5.3",
     "phpmd/phpmd": "@stable",
     "pdepend/pdepend": "2.5.0",
-    "fabpot/php-cs-fixer": "~1.2",
-    "lusitanian/oauth": "~0.8.10",
     "sebastian/phpcpd": "2.0.4"
   },
   "type": "magento2-module",
