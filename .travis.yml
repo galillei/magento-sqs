@@ -15,8 +15,3 @@ script:
 
 after_script:
   - php vendor/bin/coveralls
-
-env:
-  global:
-    - secure: "a831785c473a207fd00614e03065d131"
-    - secure: "94b62df41eb655875707b081b3485356"
