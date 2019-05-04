@@ -9,10 +9,8 @@
     </testsuite>
     <filter>
         <whitelist>
-            <directory suffix=".php">./Block</directory>
             <directory suffix=".php">./Helper</directory>
             <directory suffix=".php">./Model</directory>
-            <directory suffix=".php">./Observer</directory>
         </whitelist>
     </filter>
 </phpunit>

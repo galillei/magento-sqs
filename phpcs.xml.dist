@@ -5,9 +5,7 @@
     <arg name="colors"/>
     <rule ref="PSR2"/>
     <rule ref="Generic.Arrays.DisallowLongArraySyntax"/>
-    <file>Block</file>
     <file>Helper</file>
     <file>Model</file>
-    <file>Observer</file>
     <file>Test</file>
 </ruleset>
