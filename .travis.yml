@@ -16,16 +16,21 @@ cache:
   directories:
     - $HOME/.composer/cache
 
+before_script:
+  - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
+  - chmod +x ./cc-test-reporter
+  - ./cc-test-reporter before-build
+
 install:
   - echo "{\"http-basic\":{\"repo.magento.com\":{\"username\":\"${MAGENTO_USERNAME}\",\"password\":\"${MAGENTO_PASSWORD}\"}}}" > auth.json
   - composer install --prefer-dist
 
 script:
-  - mkdir -p build/logs
 #  - sh -c "if [ '$TEST_SUITE' = 'unit' ]; then php vendor/bin/phpcs; fi"
 #  - sh -c "if [ '$TEST_SUITE' = 'unit' ]; then php vendor/bin/phpmd Helper/,Model/,,Test/ text cleancode,codesize,controversial,design,naming,unusedcode; fi"
 #  - sh -c "if [ '$TEST_SUITE' = 'unit' ]; then php vendor/bin/phpcpd Helper/ Model/ Test/; fi"
-  - sh -c "if [ '$TEST_SUITE' = 'unit' ]; then php vendor/bin/phpunit --coverage-clover build/logs/clover.xml; fi"
+  - sh -c "if [ '$TEST_SUITE' = 'unit' ]; then php vendor/bin/phpunit --coverage-clover clover.xml; fi"
 
-after_success:
-  - travis_retry php vendor/bin/php-coveralls
+after_script:
+  - mv tests/_output/coverage.xml clover.xml
+  - ./cc-test-reporter after-build --coverage-input-type clover --id 12345 --exit-code $TRAVIS_TEST_RESULT
