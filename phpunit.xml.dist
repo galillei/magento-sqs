@@ -1,9 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/6.3/phpunit.xsd"
+<phpunit backupGlobals="false"
+         backupStaticAttributes="false"
+         bootstrap="vendor/autoload.php"
          colors="true"
-         bootstrap="./Test/Unit/bootstrap.php"
->
+         convertErrorsToExceptions="true"
+         convertNoticesToExceptions="true"
+         convertWarningsToExceptions="true"
+         processIsolation="false"
+         stopOnFailure="false">
     <testsuite name="Unit Tests">
         <directory suffix="Test.php">Test/Unit</directory>
     </testsuite>
@@ -16,6 +20,6 @@
         </whitelist>
     </filter>
     <logging>
-        <log type="coverage-php" target="build/cov/coverage.cov"/>
+        <log type="coverage-clover" target="build/logs/clover.xml"/>
     </logging>
 </phpunit>

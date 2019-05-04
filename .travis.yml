@@ -9,6 +9,9 @@ php:
   - 7.2
 
 env:
+  global:
+    - CC_TEST_REPORTER_ID=a1157ca6f1410058e28fc775ae17874bc39bbbc55ef8c90a4e23652b9f08c02b
+    - GIT_COMMITTED_AT=$(if [ "$TRAVIS_PULL_REQUEST" == "false" ]; then git log -1 --pretty=format:%ct; else git log -1 --skip 1 --pretty=format:%ct; fi)
  matrix:
     - TEST_SUITE=unit
 
@@ -29,8 +32,5 @@ script:
 #  - sh -c "if [ '$TEST_SUITE' = 'unit' ]; then php vendor/bin/phpcs; fi"
 #  - sh -c "if [ '$TEST_SUITE' = 'unit' ]; then php vendor/bin/phpmd Helper/,Model/,,Test/ text cleancode,codesize,controversial,design,naming,unusedcode; fi"
 #  - sh -c "if [ '$TEST_SUITE' = 'unit' ]; then php vendor/bin/phpcpd Helper/ Model/ Test/; fi"
-  - sh -c "if [ '$TEST_SUITE' = 'unit' ]; then php vendor/bin/phpunit --coverage-clover clover.xml; fi"
-
-after_script:
-  - mv tests/_output/coverage.xml clover.xml
-  - ./cc-test-reporter after-build --coverage-input-type clover --id 12345 --exit-code $TRAVIS_TEST_RESULT
+  - sh -c "if [ '$TEST_SUITE' = 'unit' ]; then php vendor/bin/phpunit --coverage-clover build/logs/clover.xml; fi"
+  - if [ "$TRAVIS_PULL_REQUEST" == "false" ]; then ./cc-test-reporter after-build  -t clover --exit-code $TRAVIS_TEST_RESULT; fi
