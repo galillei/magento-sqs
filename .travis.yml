@@ -21,4 +21,4 @@ install:
   - composer install --prefer-dist
 
 script:
-  - sh -c "if [ '$TEST_SUITE' = 'unit' ]; then php vendor/bin/phpunit --coverage-clover build/logs/clover.xml; fi"
+  - sh -c "if [ '$TEST_SUITE' = 'unit' ]; then php vendor/bin/phpunit; fi"
