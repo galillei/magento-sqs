@@ -1,12 +1,4 @@
----
-engines:
-  duplication:
-    enabled: true
-    config:
-      languages:
-        - php
-  fixme:
-    enabled: true
+version: "2"
 plugins:
   pmd:
     enabled: true
@@ -17,8 +9,5 @@ plugins:
     config:
       standard: "PSR1,PSR2,MEQP2"
       ignore_warnings: true
-ratings:
-  paths:
-    - "**.php"
-exclude_paths:
+exclude_patterns:
   - "Test/"
