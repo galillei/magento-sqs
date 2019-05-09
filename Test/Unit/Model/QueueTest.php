@@ -74,11 +74,14 @@ class QueueTest extends \PHPUnit\Framework\TestCase
             ->disableOriginalConstructor()
             ->getMock();
 
+        $helper = $this->objectManager->getObject('Belvg\Sqs\Helper\Data');
+
         $this->queue = $this->objectManager->getObject(
             'Belvg\Sqs\Model\Queue',
             [
                 'sqsConfig' => $this->sqsConfig,
-                'queueName' => self::QUEUE_NAME
+                'queueName' => self::QUEUE_NAME,
+                'helper' => $helper
             ]
         );
     }
@@ -87,24 +90,24 @@ class QueueTest extends \PHPUnit\Framework\TestCase
     {
         $this->sqsConfig->expects($this->exactly(3))
             ->method('getConnection')
-            ->will($this->returnValue($this->context));
+            ->willReturn($this->context);
 
         $this->context->expects($this->once())
             ->method('createQueue')
-            ->with("_". self::QUEUE_NAME)
-            ->will($this->returnValue($this->destination));
+            ->with(self::QUEUE_NAME)
+            ->willReturn($this->destination);
 
         $this->context->expects($this->once())
             ->method('createMessage')
-            ->will($this->returnValue($this->message));
+            ->willReturn($this->message);
 
         $this->context->expects($this->once())
             ->method('createConsumer')
-            ->will($this->returnValue($this->consumer));
+            ->willReturn($this->consumer);
 
         $this->envelope->expects($this->once())
             ->method('getProperties')
-            ->will($this->returnValue([]));
+            ->willReturn([]);
 
         $this->queue->acknowledge($this->envelope);
     }
@@ -113,16 +116,16 @@ class QueueTest extends \PHPUnit\Framework\TestCase
     {
         $this->sqsConfig->expects($this->exactly(2))
             ->method('getConnection')
-            ->will($this->returnValue($this->context));
+            ->willReturn($this->context);
 
         $this->context->expects($this->once())
             ->method('createQueue')
-            ->with("_". self::QUEUE_NAME)
-            ->will($this->returnValue($this->destination));
+            ->with(self::QUEUE_NAME)
+            ->willReturn($this->destination);
 
         $this->context->expects($this->once())
             ->method('createConsumer')
-            ->will($this->returnValue($this->consumer));
+            ->willReturn($this->consumer);
 
         $this->assertEquals($this->queue->dequeue(), null);
     }
