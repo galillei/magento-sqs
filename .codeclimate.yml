@@ -21,4 +21,4 @@ ratings:
   paths:
     - "**.php"
 exclude_paths:
-  - Test/
+  - "Test/"
