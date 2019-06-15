@@ -40,6 +40,7 @@ class TopologyTest extends \PHPUnit\Framework\TestCase
 
         $this->context = $this->getMockBuilder(\Enqueue\Sqs\SqsContext::class)
             ->disableOriginalConstructor()
+            ->setMethods(['createQueue','declareQueue','deleteQueue','purge'])
             ->getMock();
 
         $this->destination = $this->getMockBuilder(\Enqueue\Sqs\SqsDestination::class)
@@ -50,10 +51,13 @@ class TopologyTest extends \PHPUnit\Framework\TestCase
             ->disableOriginalConstructor()
             ->getMock();
 
+        $helper = $this->objectManager->getObject('Belvg\Sqs\Helper\Data');
+
         $this->topology = $this->objectManager->getObject(
             'Belvg\Sqs\Model\Topology',
             [
-                'sqsConfig' => $this->sqsConfig
+                'sqsConfig' => $this->sqsConfig,
+                'helper' => $helper
             ]
         );
     }
@@ -62,12 +66,12 @@ class TopologyTest extends \PHPUnit\Framework\TestCase
     {
         $this->sqsConfig->expects($this->exactly(2))
             ->method('getConnection')
-            ->will($this->returnValue($this->context));
+            ->willReturn($this->context);
 
         $this->context->expects($this->once())
             ->method('createQueue')
-            ->with("_". self::QUEUE_NAME)
-            ->will($this->returnValue($this->destination));
+            ->with(self::QUEUE_NAME)
+            ->willReturn($this->destination);
 
         $this->context->expects($this->once())
             ->method('declareQueue')
@@ -80,12 +84,12 @@ class TopologyTest extends \PHPUnit\Framework\TestCase
     {
         $this->sqsConfig->expects($this->exactly(2))
             ->method('getConnection')
-            ->will($this->returnValue($this->context));
+            ->willReturn($this->context);
 
         $this->context->expects($this->once())
             ->method('createQueue')
-            ->with("_". self::QUEUE_NAME)
-            ->will($this->returnValue($this->destination));
+            ->with(self::QUEUE_NAME)
+            ->willReturn($this->destination);
 
         $this->context->expects($this->once())
             ->method('deleteQueue')
@@ -98,12 +102,12 @@ class TopologyTest extends \PHPUnit\Framework\TestCase
     {
         $this->sqsConfig->expects($this->exactly(2))
             ->method('getConnection')
-            ->will($this->returnValue($this->context));
+            ->willReturn($this->context);
 
         $this->context->expects($this->once())
             ->method('createQueue')
-            ->with("_". self::QUEUE_NAME)
-            ->will($this->returnValue($this->destination));
+            ->with(self::QUEUE_NAME)
+            ->willReturn($this->destination);
 
         $this->context->expects($this->once())
             ->method('purge')

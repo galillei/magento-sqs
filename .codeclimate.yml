@@ -1,0 +1,13 @@
+version: "2"
+plugins:
+  pmd:
+    enabled: true
+  sonar-php:
+    enabled: true
+  phpcodesniffer:
+    enabled: true
+    config:
+      standard: "PSR1,PSR2,MEQP2"
+      ignore_warnings: true
+exclude_patterns:
+  - "Test/"
