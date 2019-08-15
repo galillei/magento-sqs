@@ -256,7 +256,7 @@ class Topology
     private function purgeQueue($queueName)
     {
         $sqsQueueName = $this->getConnection()->createQueue($this->getQueueName($queueName));
-        $this->getConnection()->purge($sqsQueueName);
+        $this->getConnection()->purgeQueue($sqsQueueName);
     }
 
 

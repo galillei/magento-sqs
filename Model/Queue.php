@@ -9,6 +9,7 @@ namespace Belvg\Sqs\Model;
 
 use Belvg\Sqs\Helper\Data;
 use Enqueue\Psr\PsrMessage;
+use Enqueue\Sqs\SqsMessage;
 use Magento\Framework\MessageQueue\EnvelopeFactory;
 use Magento\Framework\MessageQueue\EnvelopeInterface;
 use Magento\Framework\MessageQueue\QueueInterface;
@@ -78,7 +79,7 @@ class Queue implements QueueInterface
     public function dequeue()
     {
         /**
-         * @var \Enqueue\Sqs\SqsMessage $message
+         * @var SqsMessage $message
          */
         $message = $this->createConsumer()->receive(self::TIMEOUT_PROCESS);
         if (null !== $message) {
@@ -116,7 +117,7 @@ class Queue implements QueueInterface
         return $this->sqsConfig->getValue(Config::PREFIX) . '_' . Data::prepareQueueName($this->queueName);
     }
 
-    protected function createEnvelop(PsrMessage $message)
+    protected function createEnvelop(SqsMessage $message)
     {
         return $this->envelopeFactory->create([
             'body' => $message->getBody(),
@@ -141,7 +142,7 @@ class Queue implements QueueInterface
 
     /**
      * @param EnvelopeInterface $envelopereceiptHandle
-     * @return \Enqueue\Sqs\SqsMessage
+     * @return SqsMessage
      */
     protected function createMessage(EnvelopeInterface $envelope)
     {
@@ -164,7 +165,7 @@ class Queue implements QueueInterface
         $index = 0;
         while (true) {
             /**
-             * @var \Enqueue\Sqs\SqsMessage $message
+             * @var SqsMessage $message
              */
             if ($message = $this->createConsumer()->receive(self::TIMEOUT_PROCESS)) {
                 $index++;
@@ -175,7 +176,7 @@ class Queue implements QueueInterface
                 } else {
                     call_user_func($callback, $envelope);
                 }
-                //$this->createConsumer()->acknowledge($message);
+//                  $this->createConsumer()->acknowledge($message);
                 if (null !== $qtyOfMessages && $index >= $qtyOfMessages) {
                     break;
                 }
