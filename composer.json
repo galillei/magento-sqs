@@ -8,7 +8,7 @@
     "enqueue/sqs":"0.8.21"
   },
   "type": "magento2-module",
-  "version": "0.8.1",
+  "version": "0.8.2",
   "license": [
     "OSL-3.0",
     "AFL-3.0"
