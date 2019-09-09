@@ -2,10 +2,9 @@
   "name": "belvg/module-sqs",
   "description": "N/A",
   "require": {
-    "php": "7.0.2|7.0.4|~7.0.6",
-    "magento/framework": "100.0.*",
-    "magento/framework-message-queue": "100.2.*",
-    "enqueue/sqs":"0.8.21"
+  "magento/framework": "100.1.*",
+  "magento/framework-message-queue": "100.1.*",
+  "enqueue/sqs":"0.8.21"
   },
   "type": "magento2-module",
   "version": "0.8.3",
